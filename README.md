@@ -1,37 +1,47 @@
-## Welcome to GitHub Pages
+<!DOCTYPE html>
+<html lang="en">
 
-You can use the [editor on GitHub](https://github.com/RicardoPercy/samcat/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+<head>
+  <meta charset="utf-8">
+  <title>The Magical Cat Button</title>
+</head>
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+<body>
+  <button id="cat-button">magical cat button</button>
+  <div id="images">
+  </div>
+  <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+  <script type="text/javascript">
+    // Assigning a function once user clicks button
+    $("#cat-button").on("click", function() {
 
-### Markdown
+      // Links Cat API to code
+      var queryURL = "http://api.giphy.com/v1/gifs/random?api_key=dc6zaTOxFJmzC&tag=cats";
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+      // Referencing external data and linking
+      $.ajax({
+        url: queryURL,
+        method: "GET"
+      })
 
-```markdown
-Syntax highlighted code block
+      //  When done (Line 21-25), put stuff in response
+      .done(function(response) {
 
-# Header 1
-## Header 2
-### Header 3
+        // Pulling the image from the json object
+        var imageUrl = response.data.image_original_url;
 
-- Bulleted
-- List
+        // Creating a variable to hold an image element  (Jquery self closes tag)
+        var catImage = $("<img>");
 
-1. Numbered
-2. List
+        // Assing the source attribute to the image you created (Alt is for screen reading/assessibility)
+        catImage.attr("src", imageUrl);
+        catImage.attr("alt", "cat image");
 
-**Bold** and _Italic_ and `Code` text
+        //
+        $("#images").prepend(catImage);
+      });
+    });
+  </script>
+</body>
 
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/RicardoPercy/samcat/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+</html>
